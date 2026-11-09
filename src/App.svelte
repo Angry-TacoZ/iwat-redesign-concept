@@ -3,10 +3,10 @@
   import { particleField } from './particles.js';
   import iwatLogo from './assets/iwat-logo.webp';
   import PennsylvaniaMap from './PennsylvaniaMap.svelte';
-  import { people, needs, orderPeople } from './team.js';
+  import { people, services, orderPeople } from './team.js';
   import { CodeXml, Globe, Server, Network, CloudUpload, ShieldCheck } from '@lucide/svelte';
   let objective = 'A smoother way for the team to handle requests.';
-  let active = 0, cue = '', page = 'home', scenario = 'Website', selected = [], path = 'Workflow', steps = [{title:'Receive a request', owner:'Office team', friction:'Information arrives in several places'}];
+  let active = 0, cue = '', page = 'home', scenario = 'Full Team', path = 'Workflow', steps = [{title:'Receive a request', owner:'Office team', friction:'Information arrives in several places'}];
   const areas = [
     {name:'Build', route:'build', number:'01', headline:['Ideas move', 'further', 'together'], title:'Ideas, built for the way you work.', text:'From websites to custom applications, iWAT designs technology around your business.', items:['Application development','Web design & development','Custom system builds']},
     {name:'Connect', route:'connect', number:'02', headline:['Keep your business', 'connected', ''], title:'Everything works better connected.', text:'Build dependable foundations for your people, places, and systems.', items:['Network infrastructure','Cabling','Telephones & VoIP']},
@@ -27,7 +27,6 @@
   ];
   $: orderedPeople = orderPeople(scenario);
   function choose(i) { active=i; cue=`${areas[i].name} brings together ${areas[i].items.slice(0,2).join(' and ').toLowerCase()}.`; }
-  function toggle(name) { selected = selected.includes(name) ? selected.filter(x=>x!==name) : [...selected,name]; }
   function go(p) { page=p; cue=''; location.hash=p==='home'?'':p; window.scrollTo(0,0); }
   onMount(() => { const sync=()=>{const h=location.hash.slice(1); page=['build','connect','protect','advise','services','team','discover','about'].includes(h)?h:'home'}; sync(); window.addEventListener('hashchange',sync); return ()=>window.removeEventListener('hashchange',sync); });
 </script>
@@ -50,34 +49,24 @@
 {:else if page==='services'}<main class="inside"><div class="eyebrow">01 / WHAT WE DO</div><h1>Made to work<br/><em>better together.</em></h1><p class="intro">From the first conversation to ongoing support, explore the capabilities behind iWAT’s solutions.</p>{#each serviceSections as a}<section class="service-row"><div class="index">{a.number} / {a.name.toUpperCase()}</div><div><h2>{a.title}</h2><p>{a.text}</p></div><div class="selected-list">{#each a.items as item}<div>{item} <span>↗</span></div>{/each}</div></section>{/each}<a class="textlink" href="https://www.iwatllc.com/services/">View services on iWAT’s live site ↗</a></main>
 {:else if page==='team'}
 <main class="inside">
-  <div class="eyebrow">02 / OUR PEOPLE</div>
-  <h1>Good work starts<br/><em>with people.</em></h1>
-  <p class="intro">Explore public role information and compare it against an illustrative project.</p>
-  <div class="disclosure">PROTOTYPE COMPARISON · Highlights are illustrative connections based on role titles, not verified project assignments, skills, or staffing recommendations. A role without a highlighted connection is not a weakness. Directory listings may be out of date.</div>
-  <label class="scenario">Choose an example solution <select bind:value={scenario}>{#each Object.keys(needs) as s}<option>{s}</option>{/each}</select></label>
-  <p>Illustrative needs: {needs[scenario].join(' / ')}</p>
-  <p class="team-explanation" aria-live="polite">Role connections for {scenario} appear first. Other roles remain available to compare.</p>
+  <div class="eyebrow">02 / OUR PEOPLE</div><h1>Good work starts<br/><em>with people.</em></h1>
+  <p class="intro">Explore the people behind iWAT and their publicly listed roles.</p>
+  <div class="disclosure">DESIGN PROTOTYPE · Highlights are illustrative suggestions based on limited role information, not verified assignments or a ranking of ability. An unhighlighted person may also contribute. Directory listings may be out of date. <a href="https://www.iwatllc.com/services/">iWAT services ↗</a></div>
+  <label class="scenario">Explore by service <select bind:value={scenario}><option>Full Team</option>{#each Object.keys(services) as service}<option>{service}</option>{/each}</select></label>
+  <p class="team-explanation" aria-live="polite">{scenario === 'Full Team' ? 'Showing the full team in roster order.' : `Showing illustrative role connections for ${scenario} first.`}</p>
   <div class="team-grid">
     {#each orderedPeople as person (person.name)}
-      <article class="team-card" class:relevant={person.scenarios.includes(scenario)} class:muted={!person.scenarios.includes(scenario)}>
-        <button class:selected={selected.includes(person.name)} aria-pressed={selected.includes(person.name)} onclick={()=>toggle(person.name)}>
-          <small>{person.scenarios.includes(scenario) ? 'ILLUSTRATIVE ROLE CONNECTION' : 'CONNECTION NOT ESTABLISHED'}</small>
+      {@const relevant = (services[scenario] || []).includes(person.name)}
+      <article class="team-card" class:relevant class:muted={scenario !== 'Full Team' && !relevant}>
+        <div class="team-card-content">
+          {#if scenario !== 'Full Team'}<small>{relevant ? 'POSSIBLE ROLE CONNECTION' : 'OTHER TEAM MEMBER'}</small>{/if}
           <strong>{person.name}</strong><span>{person.role}</span>
           {#if person.note}<span>{person.note}</span>{/if}
-          <b>{selected.includes(person.name)?'− Remove from comparison':'+ Compare'}</b>
-        </button>
+        </div>
         <a href={person.source.url} target="_blank" rel="noopener noreferrer">{person.source.label} ↗<span class="sr-only"> for {person.name}</span></a>
       </article>
     {/each}
   </div>
-  {#if selected.length}
-    <section class="comparison"><h2>Compare for {scenario}</h2><p>Role connections are illustrative. Individual proficiency and project assignments have not been verified.</p>
-      {#each selected as name}
-        {@const person = people.find(person => person.name === name)}
-        <div><strong>{name}</strong><span>{person.role} · {person.scenarios.includes(scenario) ? 'Illustrative role connection' : 'Connection not established'}<br/><a href={person.source.url} target="_blank" rel="noopener noreferrer">{person.source.label} ↗</a></span></div>
-      {/each}
-    </section>
-  {/if}
 </main>
 {:else if page==='discover'}<main class="inside narrow"><div class="eyebrow">03 / DISCOVERY DEMO</div><h1>Let’s make the<br/><em>complex clear.</em></h1><p class="intro">Explore an example workflow or technology need. Edit the fictional example to see how your thinking takes shape.</p><div class="disclosure">DESIGN PROTOTYPE · Nothing is sent or saved. Please do not enter sensitive information. For a real inquiry, <a href="https://www.iwatllc.com/contact/">visit iWAT’s contact page ↗</a></div><div class="switch"><button class:chosen={path==='Workflow'} onclick={()=>{path='Workflow';cue='Map the handoffs and friction in a process, one step at a time.'}}>Map a workflow</button><button class:chosen={path==='IT need'} onclick={()=>{path='IT need';cue='Start with the technology outcome you want to improve.'}}>Describe an IT need</button></div><label>What are you trying to improve?<textarea bind:value={objective}></textarea></label><h2>{path==='Workflow'?'Map the steps':'Describe the need'}</h2>{#each steps as step,i}<div class="step"><div class="index">0{i+1} / DETAIL</div><label>{path==='Workflow'?'Step':'Technology need'}<input bind:value={step.title}/></label><label>Who is involved?<input bind:value={step.owner}/></label><label>Friction or challenge<textarea bind:value={step.friction}></textarea></label><button onclick={()=>steps=steps.filter((_,j)=>i!==j)} disabled={steps.length===1}>Remove</button></div>{/each}<button class="outline" onclick={()=>steps=[...steps,{title:'',owner:'',friction:''}]}>+ Add {path==='Workflow'?'step':'need'}</button><div class="summary"><div class="eyebrow">YOUR LOCAL SUMMARY</div><h2>A starting point, together.</h2>{#if objective.trim()}<p><strong>Objective:</strong> {objective}</p>{/if}{#each steps as step}<p><strong>{step.title || 'Untitled'}</strong> — {step.owner || 'Owner not specified'}{step.friction ? ': '+step.friction : ''}</p>{/each}<a class="textlink" href="https://www.iwatllc.com/contact/">Visit the real contact page ↗</a></div></main>
 {:else}<main class="inside about-page"><div class="eyebrow">04 / ABOUT IWAT</div><h1>Technology is<br/><em>personal.</em></h1><p class="intro">iWAT’s mission is to deliver innovative, personalized, and value-driven technology solutions. Its vision is to empower businesses as their trusted technology partner.</p><button class="textlink" onclick={()=>go('team')}>Meet the team →</button><p><a href="https://www.iwatllc.com/blogs/">News & insights ↗</a>　<a href="https://www.iwatllc.com/about/">About iWAT ↗</a></p>
