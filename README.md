@@ -2,6 +2,10 @@
 
 An independent, unaffiliated redesign prototype for iWAT. The site is clearly labeled as a concept; inquiries are directed to the live iWAT website.
 
+## Live concept
+
+Explore the [public GitHub Pages concept](https://angry-tacoz.github.io/iwat-redesign-concept/). It is an independent prototype, not an official iWAT website.
+
 ## Explore
 
 - A radial homepage with an interactive particle galaxy and contextual, scripted guidance.
@@ -20,11 +24,11 @@ npm test
 npm run preview
 ```
 
-The Vite build uses relative asset paths and hash navigation for static hosting beneath a GitHub Pages repository path. No site is deployed by this repository.
+The Vite build uses relative asset paths and hash navigation for static hosting beneath a GitHub Pages repository path. GitHub Pages publishes built files from the `gh-pages` branch. The current deployment was built from merge commit `de9bd8b`; subsequent source changes require a fresh build and publication to that branch.
 
 ## Prototype limits
 
-Service content is summarized, not a complete audit. The team comparison has not been enriched with individual credentials. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. GitHub Pages deployment and a comprehensive accessibility and browser review remain outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
+Service content is summarized, not a complete audit. The team comparison has not been enriched with individual credentials. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. A comprehensive accessibility and browser review remains outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
 
 The logo and company information appear for demonstration. Confirm permission to reuse iWAT branding and copy before presenting or publishing a public-facing deployment.
 
@@ -44,5 +48,7 @@ The concept evolved through a series of design decisions intended to show how a 
 10. **Connect the map to the visual language.** Replace separate map previews and long location blocks with a particle map of Pennsylvania. A city selection reveals a location card, phone information, and a Google Maps link; city markers are approximate and missing local addresses and phone numbers are labeled. Enlarge the map and slow the assembly animation, while supporting mouse, keyboard, touch, and reduced motion.
 
 11. **Make local interactions dependable.** Keep a selected map location stable while keyboard users move to its map link, and include the discovery objective in the local summary. The objective stays in memory during in-app navigation and resets on reload; it is not saved or sent.
+
+12. **Share a working concept.** Publish the initial prototype on GitHub Pages so reviewers can explore the wheel, discovery flow, and location map in a browser. The current publishing branch contains a static build and does not automatically update when source changes.
 
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.
