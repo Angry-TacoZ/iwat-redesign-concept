@@ -1,4 +1,4 @@
-const teamPage = { label: 'iWAT team page', url: 'https://www.iwatllc.com/about/' };
+const teamPage = { label: 'iWAT team page', url: 'https://www.iwatllc.com/about/#:~:text=iWAT%20Team%20Members' };
 const directory = { label: 'Third-party iWAT directory', url: 'https://www.signalhire.com/companies/iwat' };
 
 // Evidence is self-reported experience, not a verified project assignment.
