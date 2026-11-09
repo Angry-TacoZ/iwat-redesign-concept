@@ -2,6 +2,8 @@
   import { particleMap, project } from './particle-map.js';
   export let locations = [];
   let selected = null;
+  let citiesReady = false;
+  function revealCities() { citiesReady = true; }
   const cities = [
     { name: 'Chambersburg', coordinates: [-77.6611, 39.9375], labelX: 360 },
     { name: 'York', coordinates: [-76.7281, 39.9628], labelX: 635 },
@@ -12,7 +14,8 @@
 </script>
 <svelte:window onkeydown={(event) => { if (event.key === 'Escape') selected = null; }} />
 <div class="pa-map" role="group" aria-label="Map of Pennsylvania. Select a city for location details.">
-  <canvas use:particleMap aria-hidden="true"></canvas>
+  <canvas use:particleMap={{ onReveal: revealCities }} aria-hidden="true"></canvas>
+  <div class="map-cities" class:ready={citiesReady}>
   <svg viewBox="0 0 1000 670" aria-hidden="true">
     {#each cities as city}
       <path d={`M ${city.point[0]} ${city.point[1]} L ${city.labelX} 600`} class="map-leader" />
@@ -26,6 +29,7 @@
     <button type="button" class="map-city" class:active={selected?.city === city.name} style:left={`${city.labelX / 10}%`}
       aria-pressed={selected?.city === city.name} onpointerenter={(event) => hover(event, city)} onclick={() => show(city)}>{city.name}</button>
   {/each}
+  </div>
   {#if selected}
     <aside class="location-card" aria-label={`${selected.city} location information`} aria-live="polite">
       <button class="location-close" aria-label="Close location details" onclick={() => selected = null}>×</button>

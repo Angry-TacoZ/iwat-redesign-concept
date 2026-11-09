@@ -17,10 +17,10 @@ function inside(x, y) {
   return found;
 }
 
-export function particleMap(canvas) {
+export function particleMap(canvas, { onReveal = () => {} } = {}) {
   const ctx = canvas.getContext('2d');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  let seed = 47321, frame = null, startedAt = null, visible = false, finished = false;
+  let seed = 47321, frame = null, startedAt = null, visible = false, finished = false, progress = 0, revealed = false;
   const random = () => ((seed = (1664525 * seed + 1013904223) >>> 0) / 4294967296);
   const dots = [];
   for (let y = 35; y < 560; y += 9) {
@@ -44,10 +44,11 @@ export function particleMap(canvas) {
       ctx.fillStyle = `rgba(185, 238, 121, ${dot.alpha * (.4 + ease * .6)})`;
       ctx.beginPath(); ctx.arc(x, y, dot.radius, 0, Math.PI * 2); ctx.fill();
     }
+    if (!revealed && progress >= .6) { revealed = true; onReveal(); }
   }
   function tick(time) {
-    if (startedAt === null) startedAt = time;
-    const progress = Math.min(1, (time - startedAt) / 3600);
+    if (startedAt === null) startedAt = time - progress * 3600;
+    progress = Math.min(1, (time - startedAt) / 3600);
     render(progress);
     if (progress < 1) frame = requestAnimationFrame(tick);
     else { finished = true; frame = null; }
@@ -61,10 +62,10 @@ export function particleMap(canvas) {
   function motion() {
     if (frame !== null) cancelAnimationFrame(frame);
     frame = null;
-    if (reduce.matches) { finished = true; render(1); }
+    if (reduce.matches) { progress = 1; finished = true; render(1); }
     else start();
   }
-  function resized() { render(reduce.matches || finished ? 1 : 0); }
+  function resized() { render(reduce.matches || finished ? 1 : progress); }
   const resizeObserver = new ResizeObserver(resized);
   resizeObserver.observe(canvas);
   const intersection = new IntersectionObserver(entries => {
