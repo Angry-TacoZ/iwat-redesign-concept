@@ -57,4 +57,6 @@ The concept evolved through a series of design decisions intended to show how a 
 
 15. **Credit the concept creator.** Include James Lane in the independent prototype banner on every page.
 
+16. **Remove empty grid space.** Let the page background show through unused team-grid cells instead of displaying a solid block.
+
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.
