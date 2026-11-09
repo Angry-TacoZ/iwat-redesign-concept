@@ -1,23 +1,25 @@
 const teamPage = { label: 'iWAT team page', url: 'https://www.iwatllc.com/about/' };
 const directory = { label: 'Third-party iWAT directory', url: 'https://www.signalhire.com/companies/iwat' };
 
-// Connections are provisional role-based suggestions, not verified assignments.
+// Evidence is self-reported experience, not a verified project assignment.
+const clint = { name: 'Clint Walker', detail: 'Describes client software and web development with PHP and JavaScript.', url: 'https://www.linkedin.com/in/clintjameswalker/' };
+const kylie = { name: 'Kylie Wilson', detail: 'Describes web design and development, including WordPress sites.', url: 'https://www.linkedin.com/in/kyrwilson/' };
 export const services = {
-  'Custom Application Development': ['Clint Walker', 'Rob Fulcher', 'Dan McCleary', 'James Butts', 'Brandon Fulcher'],
-  'Web Design & Development': ['Kylie Wilson', 'Clint Walker', 'Rob Fulcher', 'Brandon Fulcher', 'Patrick Hicks'],
-  'Managed IT Services': ['Travis Durf', 'Cameron Leib', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix'],
-  'Network Infrastructure Installation and Services': ['Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix'],
-  'Cloud Backups': ['Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix'],
-  'EDR Software': ['Travis Durf', 'Cameron Leib', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix'],
-  'System Cleanup': ['Cameron Leib', 'Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix'],
-  'IT Technical Support': ['Cameron Leib', 'Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix'],
-  'VoIP': ['Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix'],
-  'Cabling': ['Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix'],
-  'Hardware & Software Procurement Services': ['Travis Durf', 'Owen Bernecker', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix'],
-  'Technology Training and Learning Center': ['Rob Fulcher', 'Kylie Wilson', 'Clint Walker'],
-  'IT Consulting / Virtual CIO Services': ['Rob Fulcher', 'Dan McCleary', 'James Butts', 'Clint Walker'],
-  'AI Consulting': ['Rob Fulcher'],
-  'Custom PC Builds': ['Travis Durf', 'Cameron Leib', 'Tanner Wetzel', 'Logan Zeigler', 'Ethan Fix']
+  'Custom Application Development': [clint],
+  'Web Design & Development': [kylie, clint],
+  'Managed IT Services': [],
+  'Network Infrastructure Installation and Services': [],
+  'Cloud Backups': [],
+  'EDR Software': [],
+  'System Cleanup': [],
+  'IT Technical Support': [],
+  'VoIP': [],
+  'Cabling': [],
+  'Hardware & Software Procurement Services': [],
+  'Technology Training and Learning Center': [],
+  'IT Consulting / Virtual CIO Services': [],
+  'AI Consulting': [],
+  'Custom PC Builds': []
 };
 
 export const people = [
@@ -35,14 +37,18 @@ export const people = [
   { name: 'Ethan Fix', role: 'Technical Architect' },
   { name: 'Kathy Pross', role: 'Office Manager' },
   { name: 'Owen Bernecker', role: 'Operations Manager' },
-  { name: 'Patrick Hicks', role: 'Solutions Architect (directory listing)', source: directory, note: 'A supplied profile also describes software engineering. Current role not confirmed.' },
-  { name: 'Cameron Leib', role: 'Information Technology Contractor (directory listing)', source: directory, note: 'Current role not confirmed.' }
-].map(person => ({ ...person, source: person.source || teamPage }));
+].map(person => ({ ...person, source: teamPage }));
+
+// Kept for research only; not included in the roster or service highlights.
+export const unverifiedListings = [
+  { name: 'Patrick Hicks', source: directory, note: 'Directory lists a solutions architect; a supplied profile mentions software engineering. Current employment and responsibilities unconfirmed.' },
+  { name: 'Cameron Leib', source: directory, note: 'Directory lists an information technology contractor. Current employment and responsibilities unconfirmed.' }
+];
 
 export function orderPeople(service) {
   const matches = services[service] || [];
   return [...people].sort((a, b) => {
-    const ai = matches.indexOf(a.name), bi = matches.indexOf(b.name);
+    const ai = matches.findIndex(match => match.name === a.name), bi = matches.findIndex(match => match.name === b.name);
     return (ai < 0 ? Infinity : ai) - (bi < 0 ? Infinity : bi);
   });
 }

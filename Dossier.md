@@ -4,7 +4,7 @@ Research snapshot: 9 November 2026. This is an independent prototype, not an off
 
 ## Verified roster and role source
 
-The [iWAT team page](https://www.iwatllc.com/about/) lists the following names and roles. A role title alone does not establish a specialty. Where no further evidence is listed below, individual skills and credentials remain unverified.
+The [iWAT team page](https://www.iwatllc.com/about/) listed these 14 people and roles when checked on 9 November 2026. This establishes the published roster, not independently verified current employment. A role title alone does not establish a specialty. Where no further evidence is listed below, individual skills and credentials remain unverified.
 
 | Person | iWAT-listed role | Additional profile evidence |
 | --- | --- | --- |
@@ -33,6 +33,16 @@ The [iWAT team page](https://www.iwatllc.com/about/) lists the following names a
 
 [LinkedIn profile](https://www.linkedin.com/in/clintjameswalker/): Clint describes designing client software, managing projects and leading a team at iWAT; an earlier role lists web development and maintenance with PHP and JavaScript. He reports skills in PHP, C# and database design, and a bachelor's degree focused on game programming at Pennsylvania College of Technology. The profile supports an illustrative software or website-project connection; the degree and skills have not been independently verified.
 
+## Retained service connections
+
+- **Custom Application Development — Clint Walker:** [His profile](https://www.linkedin.com/in/clintjameswalker/) describes designing client software at iWAT. This is self-reported relevant experience, not proof of assignment to a particular application project.
+- **Web Design & Development — Kylie Wilson and Clint Walker:** [Kylie's profile](https://www.linkedin.com/in/kyrwilson/) describes building and managing websites; [Clint's profile](https://www.linkedin.com/in/clintjameswalker/) describes web development and maintenance. These are self-reported and do not establish staffing for any particular project.
+- **All other service categories:** no individual connection is established from the evidence collected here. Previous role-title-based matches were removed, including for managed IT, network infrastructure, cloud backups, EDR, cleanup, technical support, VoIP, cabling, procurement, training, vCIO, AI consulting and custom PC builds. A generic job title does not establish a person's experience in these specialties.
+
+## Unverified third-party directory listings
+
+[SignalHire's iWAT directory](https://www.signalhire.com/companies/iwat) lists Patrick Hicks as a solutions architect and Cameron Leib as an information technology contractor. A user-supplied screenshot describes Patrick as a software engineer / solutions architect. Neither is listed on iWAT's 14-person team page; their current employment and responsibilities have not been confirmed. They are not included in the prototype's official roster or service highlights.
+
 ## Research limitations
 
-The remaining profiles require further identity and experience verification. A search result or name alone is not sufficient to link a profile to an employee. Do not infer proficiency, weaknesses or actual assignments from this dossier. Patrick Hicks and Cameron Leib appear in the prototype as separately labeled third-party directory listings; they are not on the 14-person company roster above and their current roles need confirmation.
+The remaining profiles require further identity and experience verification. A search result or name alone is not sufficient to link a profile to an employee. Do not infer proficiency, weaknesses or actual assignments from this dossier. Profile access may vary, and third-party information can be stale.

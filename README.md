@@ -10,7 +10,7 @@ Explore the [public GitHub Pages concept](https://angry-tacoz.github.io/iwat-red
 
 - A radial homepage with an interactive particle galaxy and contextual, scripted guidance.
 - Grouped service pages and a local, example-driven discovery flow. No form data is sent or saved.
-- A team directory that highlights illustrative role connections for each listed service and links to role sources.
+- A team directory using iWAT’s published roster, with service highlights only where self-reported experience is documented and linked.
 - A particle map of Pennsylvania with approximate city markers, location cards, and Google Maps links. The state boundary is adapted from [PennDOT's State Boundary layer](https://gis.penndot.gov/arcgis/rest/services/paprojects/paprojects/MapServer/26).
 
 ## Run locally
@@ -53,6 +53,8 @@ The concept evolved through a series of design decisions intended to show how a 
 
 13. **Make project comparisons easier to explore.** Bring people with an illustrative role connection to the selected scenario to the front and visually distinguish them, while keeping other cards readable and selectable. Show the source for each role, label directory listings that may be outdated, and make clear that role-based connections are not verified skills or staffing decisions.
 
-14. **Browse the full team by service.** Replace the comparison feature with a Full Team default and filters for the 15 services on iWAT's services page. Show up to five provisional role connections first; keep other team members visible and explain that highlights do not establish assignments or ability.
+14. **Browse the full team by service.** Replace comparison with a Full Team default and 15 service filters. Keep iWAT’s published roster separate from unverified directory listings. Highlight only documented relevant experience, link its source, and show the whole roster when evidence is insufficient. Experience is self-reported and does not establish project assignments or a ranking of ability.
+
+15. **Credit the concept creator.** Include James Lane in the independent prototype banner on every page.
 
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.

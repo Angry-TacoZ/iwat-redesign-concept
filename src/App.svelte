@@ -31,7 +31,7 @@
   onMount(() => { const sync=()=>{const h=location.hash.slice(1); page=['build','connect','protect','advise','services','team','discover','about'].includes(h)?h:'home'}; sync(); window.addEventListener('hashchange',sync); return ()=>window.removeEventListener('hashchange',sync); });
 </script>
 <svelte:head><title>iWAT | Technology, connected</title><meta name="description" content="An independent interactive redesign concept for iWAT." /></svelte:head>
-<div class="notice">INDEPENDENT DESIGN PROTOTYPE <span> · No inquiries are sent from this site.</span> <a href="https://www.iwatllc.com/">Visit the live iWAT site ↗</a></div>
+<div class="notice">INDEPENDENT DESIGN PROTOTYPE · JAMES LANE <span> · No inquiries are sent from this site.</span> <a href="https://www.iwatllc.com/">Visit the live iWAT site ↗</a></div>
 {#if page !== 'home'}<div class="ambient-background" aria-hidden="true"><canvas use:particleField={{variant:'ambient'}}></canvas></div>{/if}
 <header><button class="brand" onclick={()=>go('home')} aria-label="iWAT concept home"><img class="brand-logo" src={iwatLogo} alt="" /><small>TECHNOLOGY SOLUTIONS</small></button><nav aria-label="Main navigation"><button onclick={()=>go('services')}>What we do</button><button onclick={()=>go('team')}>Our people</button><button onclick={()=>go('about')}>About</button><button class="navcta" onclick={()=>go('discover')}>Explore your needs <span>↗</span></button></nav></header>
 {#if page==='home'}
@@ -51,18 +51,19 @@
 <main class="inside">
   <div class="eyebrow">02 / OUR PEOPLE</div><h1>Good work starts<br/><em>with people.</em></h1>
   <p class="intro">Explore the people behind iWAT and their publicly listed roles.</p>
-  <div class="disclosure">DESIGN PROTOTYPE · Highlights are illustrative suggestions based on limited role information, not verified assignments or a ranking of ability. An unhighlighted person may also contribute. Directory listings may be out of date. <a href="https://www.iwatllc.com/services/">iWAT services ↗</a></div>
+  <div class="disclosure">DESIGN PROTOTYPE · The roster comes from iWAT’s team page. Highlights reflect documented, self-reported experience, not verified project assignments or a ranking of ability. An unhighlighted person may also contribute. <a href="https://www.iwatllc.com/services/">iWAT services ↗</a></div>
   <label class="scenario">Explore by service <select bind:value={scenario}><option>Full Team</option>{#each Object.keys(services) as service}<option>{service}</option>{/each}</select></label>
-  <p class="team-explanation" aria-live="polite">{scenario === 'Full Team' ? 'Showing the full team in roster order.' : `Showing illustrative role connections for ${scenario} first.`}</p>
+  <p class="team-explanation" aria-live="polite">{scenario === 'Full Team' ? 'Showing the full team in roster order.' : services[scenario].length ? `Showing documented relevant experience for ${scenario} first.` : 'No individual service connections could be established from available public evidence.'}</p>
   <div class="team-grid">
     {#each orderedPeople as person (person.name)}
-      {@const relevant = (services[scenario] || []).includes(person.name)}
-      <article class="team-card" class:relevant class:muted={scenario !== 'Full Team' && !relevant}>
+      {@const evidence = (services[scenario] || []).find(match => match.name === person.name)}
+      <article class="team-card" class:relevant={!!evidence} class:muted={scenario !== 'Full Team' && services[scenario].length > 0 && !evidence}>
         <div class="team-card-content">
-          {#if scenario !== 'Full Team'}<small>{relevant ? 'POSSIBLE ROLE CONNECTION' : 'OTHER TEAM MEMBER'}</small>{/if}
+          {#if evidence}<small>DOCUMENTED RELEVANT EXPERIENCE</small>{/if}
           <strong>{person.name}</strong><span>{person.role}</span>
-          {#if person.note}<span>{person.note}</span>{/if}
+          {#if evidence}<span>{evidence.detail}</span>{/if}
         </div>
+        {#if evidence}<a href={evidence.url} target="_blank" rel="noopener noreferrer">Experience source ↗<span class="sr-only"> for {person.name}</span></a>{/if}
         <a href={person.source.url} target="_blank" rel="noopener noreferrer">{person.source.label} ↗<span class="sr-only"> for {person.name}</span></a>
       </article>
     {/each}
