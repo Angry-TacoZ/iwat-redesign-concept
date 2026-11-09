@@ -25,3 +25,7 @@ dist-ssr
 
 # Local browser automation artifacts
 .playwright-cli/
+
+# Playwright test output
+/test-results/
+/playwright-report/

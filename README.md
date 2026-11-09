@@ -15,6 +15,8 @@ An independent, unaffiliated redesign prototype for iWAT. The site is clearly la
 npm ci
 npm run dev
 npm run build
+npx playwright install chromium
+npm test
 npm run preview
 ```
 
@@ -40,5 +42,7 @@ The concept evolved through a series of design decisions intended to show how a 
 8. **Make discovery tangible.** Adapt ideas from the James Lane AI process mapper into a local workflow/IT-needs example. Nothing is transmitted or persisted; the concept sends real inquiries to the official site.
 9. **Make team comparisons evidence-led.** Adapt Delivery Composer's transparent comparison idea using published names and roles. Unknown credentials and capabilities remain explicitly unverified rather than being scored or described as weaknesses.
 10. **Connect the map to the visual language.** Replace separate map previews and long location blocks with a particle map of Pennsylvania. A city selection reveals a location card, phone information, and a Google Maps link; city markers are approximate and missing local addresses and phone numbers are labeled. Enlarge the map and slow the assembly animation, while supporting mouse, keyboard, touch, and reduced motion.
+
+11. **Make local interactions dependable.** Keep a selected map location stable while keyboard users move to its map link, and include the discovery objective in the local summary. The objective stays in memory during in-app navigation and resets on reload; it is not saved or sent.
 
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.

@@ -24,7 +24,7 @@
     <button type="button" class="map-pin" style:left={`${city.point[0] / 10}%`} style:top={`${city.point[1] / 6.7}%`}
       aria-label={`Show ${city.name} details`} tabindex="-1" onpointerenter={(event) => hover(event, city)} onclick={() => show(city)}></button>
     <button type="button" class="map-city" class:active={selected?.city === city.name} style:left={`${city.labelX / 10}%`}
-      aria-pressed={selected?.city === city.name} onpointerenter={(event) => hover(event, city)} onfocus={() => show(city)} onclick={() => show(city)}>{city.name}</button>
+      aria-pressed={selected?.city === city.name} onpointerenter={(event) => hover(event, city)} onclick={() => show(city)}>{city.name}</button>
   {/each}
   {#if selected}
     <aside class="location-card" aria-label={`${selected.city} location information`} aria-live="polite">
