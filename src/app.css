@@ -80,6 +80,7 @@ footer{font-size:13px;line-height:1.6;letter-spacing:.04em;color:#c5d0c0}footer 
 
 .pa-map{position:relative;width:100%;aspect-ratio:1000/670;margin:20px 0 0;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#213521 0,#111a12 68%);border:1px solid #b9ee792c}
 .pa-map canvas,.pa-map svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.team-explanation{color:#c6d5bf;font-size:14px;line-height:1.6}.team-card{background:#182018;display:flex;flex-direction:column;border-top:3px solid transparent}.team-card.relevant{border-color:#b9ee79;background:#20331e}.team-card.muted{background:#161c16}.team-grid .team-card button{background:transparent;width:100%;flex:1}.team-grid .team-card button:hover,.team-grid .team-card button.selected{background:#293d27}.team-card.muted button small{color:#b7c5b0}.team-card a{padding:0 24px 20px;color:#d4efc1;font-size:13px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .map-cities{position:absolute;inset:0;visibility:hidden;opacity:0;transition:opacity .5s ease}.map-cities.ready{visibility:visible;opacity:1}
 @media(prefers-reduced-motion:reduce){.map-cities{transition:none}}
 .map-leader{fill:none;stroke:#b9ee79;stroke-width:1.4;opacity:.7}

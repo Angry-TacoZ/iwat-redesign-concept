@@ -51,4 +51,6 @@ The concept evolved through a series of design decisions intended to show how a 
 
 12. **Share a working concept.** Publish the initial prototype on GitHub Pages so reviewers can explore the wheel, discovery flow, and location map in a browser. The current publishing branch contains a static build and does not automatically update when source changes.
 
+13. **Make project comparisons easier to explore.** Bring people with an illustrative role connection to the selected scenario to the front and visually distinguish them, while keeping other cards readable and selectable. Show the source for each role, label directory listings that may be outdated, and make clear that role-based connections are not verified skills or staffing decisions.
+
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.

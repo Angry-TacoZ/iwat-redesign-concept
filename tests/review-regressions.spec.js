@@ -1,5 +1,38 @@
 import { test, expect } from '@playwright/test';
 
+test('scenario changes reorder role connections and preserve comparison selections', async ({ page }) => {
+  await page.goto('/#team');
+  const cards = page.locator('.team-card');
+  const select = page.getByLabel('Choose an example solution');
+  await expect(cards.first()).toContainText('Rob Fulcher');
+  await expect(cards.first()).toContainText('ILLUSTRATIVE ROLE CONNECTION');
+  await page.getByRole('button', { name: /Kathy Pross/ }).click();
+  await select.selectOption('Network upgrade');
+  await expect(cards.first()).toContainText('Travis Durf');
+  await expect(cards.first()).toHaveClass(/relevant/);
+  await expect(page.getByRole('button', { name: /Kathy Pross/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.comparison')).toContainText('Connection not established');
+  await expect(page.getByRole('link', { name: /iWAT team page.*Travis Durf/ })).toHaveAttribute('href', 'https://www.iwatllc.com/about/');
+  await select.selectOption('Managed IT');
+  await expect(cards.first()).toContainText('Travis Durf');
+  await expect(page.locator('.team-card').filter({ hasText: 'Cameron Leib' })).toHaveClass(/relevant/);
+  await expect(page.locator('.team-card').filter({ hasText: 'Patrick Hicks' })).toContainText('Current role not confirmed');
+});
+
+test('team comparison works in a touch-sized viewport', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
+  try {
+    const page = await context.newPage();
+    await page.goto('http://127.0.0.1:4179/#team');
+    await page.getByLabel('Choose an example solution').selectOption('Managed IT');
+    await page.getByRole('button', { name: /Travis Durf/ }).tap();
+    await expect(page.locator('.comparison')).toContainText('Travis Durf');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  } finally {
+    await context.close();
+  }
+});
+
 test('city labels appear as the map takes shape, or immediately with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/#about');
