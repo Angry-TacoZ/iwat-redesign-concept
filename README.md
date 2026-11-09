@@ -10,7 +10,7 @@ Explore the [public GitHub Pages concept](https://angry-tacoz.github.io/iwat-red
 
 - A radial homepage with an interactive particle galaxy and contextual, scripted guidance.
 - Grouped service pages and a local, example-driven discovery flow. No form data is sent or saved.
-- A team comparison that displays published roles and identifies missing evidence rather than inventing credentials or proficiency ratings.
+- A team directory using iWAT’s published roster, with service highlights only where self-reported experience is documented and linked.
 - A particle map of Pennsylvania with approximate city markers, location cards, and Google Maps links. The state boundary is adapted from [PennDOT's State Boundary layer](https://gis.penndot.gov/arcgis/rest/services/paprojects/paprojects/MapServer/26).
 
 ## Run locally
@@ -28,7 +28,7 @@ The Vite build uses relative asset paths and hash navigation for static hosting 
 
 ## Prototype limits
 
-Service content is summarized, not a complete audit. The team comparison has not been enriched with individual credentials. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. A comprehensive accessibility and browser review remains outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
+Service content is summarized, not a complete audit. Most individual credentials and service assignments remain unverified. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. A comprehensive accessibility and browser review remains outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
 
 The logo and company information appear for demonstration. Confirm permission to reuse iWAT branding and copy before presenting or publishing a public-facing deployment.
 
@@ -50,5 +50,11 @@ The concept evolved through a series of design decisions intended to show how a 
 11. **Make local interactions dependable.** Keep a selected map location stable while keyboard users move to its map link, and include the discovery objective in the local summary. The objective stays in memory during in-app navigation and resets on reload; it is not saved or sent.
 
 12. **Share a working concept.** Publish the initial prototype on GitHub Pages so reviewers can explore the wheel, discovery flow, and location map in a browser. The current publishing branch contains a static build and does not automatically update when source changes.
+
+13. **Make project comparisons easier to explore.** Bring people with an illustrative role connection to the selected scenario to the front and visually distinguish them, while keeping other cards readable and selectable. Show the source for each role, label directory listings that may be outdated, and make clear that role-based connections are not verified skills or staffing decisions.
+
+14. **Browse the full team by service.** Replace comparison with a Full Team default and 15 service filters. Keep iWAT’s published roster separate from unverified directory listings. Highlight only documented relevant experience, link its source, and show the whole roster when evidence is insufficient. Experience is self-reported and does not establish project assignments or a ranking of ability.
+
+15. **Credit the concept creator.** Include James Lane in the independent prototype banner on every page.
 
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.

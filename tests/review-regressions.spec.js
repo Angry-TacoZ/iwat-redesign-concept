@@ -1,5 +1,54 @@
 import { test, expect } from '@playwright/test';
 
+const officialRoster = ['Rob Fulcher', 'Dan McCleary', 'James Butts', 'Clint Walker', 'Kylie Wilson', 'Brandon Fulcher', 'Brandon Lamer-Connolly', 'Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix', 'Kathy Pross', 'Owen Bernecker'];
+
+test('service browsing preserves the official roster and uses documented evidence', async ({ page }) => {
+  await page.goto('/#team');
+  const cards = page.locator('.team-card');
+  const names = cards.locator('strong');
+  const select = page.getByLabel('Explore by service');
+  await expect(select).toHaveValue('Full Team');
+  await expect(names).toHaveText(officialRoster);
+  await expect(select.locator('option')).toHaveCount(16);
+  const supported = {
+    'Custom Application Development': [['Clint Walker', 'https://www.linkedin.com/in/clintjameswalker/']],
+    'Web Design & Development': [['Kylie Wilson', 'https://www.linkedin.com/in/kyrwilson/'], ['Clint Walker', 'https://www.linkedin.com/in/clintjameswalker/']]
+  };
+  for (const value of await select.locator('option').allTextContents()) {
+    if (value === 'Full Team') continue;
+    await select.selectOption(value);
+    expect((await names.allTextContents()).sort()).toEqual([...officialRoster].sort());
+    const expected = supported[value] || [];
+    const highlighted = page.locator('.team-card.relevant');
+    await expect(highlighted).toHaveCount(expected.length);
+    expect(expected.length).toBeLessThanOrEqual(5);
+    for (let i = 0; i < expected.length; i++) {
+      await expect(highlighted.nth(i).locator('strong')).toHaveText(expected[i][0]);
+      await expect(highlighted.nth(i).getByRole('link', { name: /Experience source/ })).toHaveAttribute('href', expected[i][1]);
+    }
+    if (!expected.length) await expect(page.getByText('No individual service connections could be established from available public evidence.')).toBeVisible();
+    await expect(page.getByText('Patrick Hicks')).toHaveCount(0);
+    await expect(page.getByText('Cameron Leib')).toHaveCount(0);
+  }
+  await select.selectOption('Full Team');
+  await expect(names).toHaveText(officialRoster);
+  await expect(page.locator('.team-card.relevant')).toHaveCount(0);
+  await expect(page.getByText('INDEPENDENT DESIGN PROTOTYPE · JAMES LANE')).toBeVisible();
+});
+
+test('service selection works at a touch-sized viewport', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
+  try {
+    const page = await context.newPage();
+    await page.goto('http://127.0.0.1:4179/#team');
+    await page.getByLabel('Explore by service').selectOption('Managed IT Services');
+    await expect(page.locator('.team-card')).toHaveCount(14);
+    await expect(page.locator('.team-card.relevant')).toHaveCount(0);
+    await expect(page.getByText('INDEPENDENT DESIGN PROTOTYPE · JAMES LANE')).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  } finally { await context.close(); }
+});
+
 test('city labels appear as the map takes shape, or immediately with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/#about');
