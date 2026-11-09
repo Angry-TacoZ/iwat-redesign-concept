@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test('city labels appear as the map takes shape, or immediately with reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/#about');
+  const map = page.locator('.pa-map');
+  const city = page.locator('.map-city').first();
+  await map.scrollIntoViewIfNeeded();
+  await expect(city).toBeHidden();
+  await page.waitForTimeout(700);
+  await expect(city).toBeHidden();
+  await expect(city).toBeVisible({ timeout: 5000 });
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.reload();
+  await expect(city).toBeVisible();
+});
+
 test('keyboard users retain the selected city while reaching its map link', async ({ page }) => {
   await page.goto('/#about');
   for (const [city, query] of [
