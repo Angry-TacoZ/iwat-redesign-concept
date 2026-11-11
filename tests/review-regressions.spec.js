@@ -1,5 +1,17 @@
 import { test, expect } from '@playwright/test';
 
+test('wheel and service pages use iWAT copy and retain working destinations', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('We Create the Solutions to Your Technology Problems');
+  await page.getByRole('button', { name: /Connect ↗/ }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Network Infrastructure Installation and Services');
+  await page.getByRole('button', { name: /Explore Connect/ }).click();
+  await expect(page).toHaveURL(/#connect$/);
+  await expect(page.getByRole('link', { name: /Cabling/ })).toHaveAttribute('href', 'https://www.iwatllc.com/cabling/');
+  await page.getByRole('button', { name: 'What we do' }).click();
+  await expect(page.getByRole('link', { name: /Custom Application Development/ })).toHaveAttribute('href', 'https://www.iwatllc.com/application-development/');
+});
+
 const officialRoster = ['Rob Fulcher', 'Dan McCleary', 'James Butts', 'Clint Walker', 'Kylie Wilson', 'Brandon Fulcher', 'Brandon Lamer-Connolly', 'Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix', 'Kathy Pross', 'Owen Bernecker'];
 
 test('service browsing preserves the official roster and uses documented evidence', async ({ page }) => {

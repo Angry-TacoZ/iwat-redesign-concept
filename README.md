@@ -28,7 +28,7 @@ The Vite build uses relative asset paths and hash navigation for static hosting 
 
 ## Prototype limits
 
-Service content is summarized, not a complete audit. Most individual credentials and service assignments remain unverified. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. A comprehensive accessibility and browser review remains outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
+The prototype reproduces selected wording from iWAT’s public pages and links to the live service and solutions pages; it is not a complete copy of every page. Most individual credentials and service assignments remain unverified. Guidance is deterministic; it makes no LLM calls. Rust/WebAssembly has not been benchmarked against the JavaScript particle simulation. A comprehensive accessibility and browser review remains outstanding. The Lancaster and York locations are approximate city markers, not verified office addresses; their listed number is iWAT's main line.
 
 The logo and company information appear for demonstration. Confirm permission to reuse iWAT branding and copy before presenting or publishing a public-facing deployment.
 
@@ -60,5 +60,7 @@ The concept evolved through a series of design decisions intended to show how a 
 16. **Remove empty grid space.** Let the page background show through unused team-grid cells instead of displaying a solid block.
 
 17. **Link directly to the team.** Team source links use a text fragment to open iWAT’s team heading where supported; if the heading or browser support changes, the About page remains the destination.
+
+18. **Preserve iWAT’s voice.** Replace prototype marketing slogans with headings and descriptions from the live iWAT site while retaining the interactive wheel, navigation and clearly labeled simulated tools. Link service names to their corresponding live pages.
 
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.
