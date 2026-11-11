@@ -1,15 +1,53 @@
 import { test, expect } from '@playwright/test';
 
-test('wheel and service pages use iWAT copy and retain working destinations', async ({ page }) => {
+test('wheel destinations match iWAT navigation and the node centers meet the ring', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('We Create the Solutions to Your Technology Problems');
-  await page.getByRole('button', { name: /Connect ↗/ }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Network Infrastructure Installation and Services');
-  await page.getByRole('button', { name: /Explore Connect/ }).click();
-  await expect(page).toHaveURL(/#connect$/);
-  await expect(page.getByRole('link', { name: /Cabling/ })).toHaveAttribute('href', 'https://www.iwatllc.com/cabling/');
-  await page.getByRole('button', { name: 'What we do' }).click();
+  const wheel = page.locator('.wheel');
+  for (const node of await page.locator('.wheel .node').all()) {
+    const ring = await wheel.boundingBox();
+    const circle = await node.boundingBox();
+    const dx = (circle.x + circle.width / 2 - (ring.x + ring.width / 2)) / (ring.width / 2);
+    const dy = (circle.y + circle.height / 2 - (ring.y + ring.height / 2)) / (ring.height / 2);
+    expect(Math.abs(Math.hypot(dx, dy) - 1)).toBeLessThan(.015);
+  }
+  await expect(page.getByRole('link', { name: /Ask AI/ })).toHaveAttribute('href', 'https://www.iwatllc.com/ai/');
+  await expect(page.getByRole('link', { name: /Blog/ })).toHaveAttribute('href', 'https://www.iwatllc.com/blogs/');
+  await expect(page.getByRole('link', { name: /Contact Us/ })).toHaveAttribute('href', 'https://www.iwatllc.com/contact/');
+  await page.getByRole('button', { name: /Services/ }).click();
+  await expect(page).toHaveURL(/#services$/);
   await expect(page.getByRole('link', { name: /Custom Application Development/ })).toHaveAttribute('href', 'https://www.iwatllc.com/application-development/');
+  await page.getByRole('button', { name: /Back to the wheel/ }).click();
+  await page.getByRole('button', { name: /Solutions/ }).click();
+  await expect(page).toHaveURL(/#solutions$/);
+  await expect(page.getByRole('heading', { name: 'Application Development' })).toBeVisible();
+  await page.getByRole('button', { name: /Back to the wheel/ }).click();
+  await page.getByRole('button', { name: /About Us/ }).click();
+  await expect(page).toHaveURL(/#about$/);
+  await page.getByRole('button', { name: /Meet the team/ }).click();
+  await expect(page).toHaveURL(/#team$/);
+});
+
+test('phone wheel keeps its six destinations aligned and clear of the message', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce' });
+  try {
+    const page = await context.newPage();
+    await page.goto('http://127.0.0.1:4179/');
+    const wheel = await page.locator('.wheel').boundingBox();
+    const message = await page.locator('.core-detail p').boundingBox();
+    const nodes = page.locator('.wheel .node');
+    await expect(nodes).toHaveCount(6);
+    for (const node of await nodes.all()) {
+      const rect = await node.boundingBox();
+      const dx = (rect.x + rect.width / 2 - (wheel.x + wheel.width / 2)) / (wheel.width / 2);
+      const dy = (rect.y + rect.height / 2 - (wheel.y + wheel.height / 2)) / (wheel.height / 2);
+      expect(Math.abs(Math.hypot(dx, dy) - 1)).toBeLessThan(.015);
+      expect(rect.x).toBeGreaterThanOrEqual(0);
+      expect(rect.x + rect.width).toBeLessThanOrEqual(390);
+      const overlaps = rect.x < message.x + message.width && rect.x + rect.width > message.x && rect.y < message.y + message.height && rect.y + rect.height > message.y;
+      expect(overlaps).toBe(false);
+    }
+  } finally { await context.close(); }
 });
 
 const officialRoster = ['Rob Fulcher', 'Dan McCleary', 'James Butts', 'Clint Walker', 'Kylie Wilson', 'Brandon Fulcher', 'Brandon Lamer-Connolly', 'Travis Durf', 'Tanner Wetzel', 'Logan Zeigler', 'Greg Johnston', 'Ethan Fix', 'Kathy Pross', 'Owen Bernecker'];
@@ -107,7 +145,7 @@ test('discovery objective appears in the summary and survives in-app navigation 
   const objective = page.getByLabel('What are you trying to improve?');
   await objective.fill('Reduce support delays');
   await expect(page.locator('.summary')).toContainText('Reduce support delays');
-  await page.getByRole('button', { name: 'About', exact: true }).click();
+  await page.getByRole('button', { name: /Back to the wheel/ }).click();
   await page.getByRole('button', { name: /Explore your needs/ }).click();
   await expect(objective).toHaveValue('Reduce support delays');
   await expect(page.locator('.summary')).toContainText('Reduce support delays');

@@ -63,4 +63,6 @@ The concept evolved through a series of design decisions intended to show how a 
 
 18. **Preserve iWAT’s voice.** Replace prototype marketing slogans with headings and descriptions from the live iWAT site while retaining the interactive wheel, navigation and clearly labeled simulated tools. Link service names to their corresponding live pages.
 
+19. **Make the wheel the navigation.** Replace the header navigation with six evenly spaced wheel destinations matching iWAT’s main links; the logo returns home. Blog, Ask AI and Contact Us open iWAT’s live pages, while About Us, Services and Solutions open concept pages. The Ask AI link leads to iWAT’s on-air question page, not the simulated discovery demo. Position each circle’s center on the wheel ring.
+
 **Technology decision:** Svelte and Vite were chosen for the static interactive prototype. Rust/WebAssembly was proposed for a possible particle simulation comparison; the benchmark has not been completed, so the current JavaScript implementation should not be presented as a measured performance decision.
